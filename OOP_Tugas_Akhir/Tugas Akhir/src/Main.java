@@ -5,8 +5,8 @@ public class Main {
 
 	public static Integer menu(Scanner sc) {
 		System.out.println("Restaurant reservation");
-		System.out.println("1. Show data");
-		System.out.println("2. Insert Data");
+		System.out.println("1. Show menu");
+		System.out.println("2. Make reservation");
 		System.out.println("3. Exit");
 		System.out.println("Input your choice");
 		Integer choice = sc.nextInt();
@@ -44,18 +44,23 @@ public class Main {
 				choice = menu(sc);
 				switch (choice) {
 					case 1:
-						System.out.println("Data in books table: ");
-						viewData(conn,"select * from books");
+						System.out.println("Menus: ");
+						viewData(conn,"select * from Menu");
 						break;
 						
 					case 2:
-						String title, author, publisher;
-						System.out.println("Input new title: ");
-						title = sc.nextLine();
-						System.out.println("Input book author: ");
-						author = sc.nextLine();
-						System.out.println("Input publisher: ");
-						publisher = sc.nextLine();
+						String EmployeeID, Name, Place;
+						int Desks, Type, People;
+						System.out.println("Input Employee ID: ");
+						EmployeeID = sc.nextLine();
+						System.out.println("Input Customer Name: ");
+						Name = sc.nextLine();
+						System.out.println("Input Total Number of Desks: ");
+						Desks = sc.nextInt();
+						System.out.println("Input Type of Desk: ");
+						Type = sc.nextLine();
+						System.out.println("Input Total Number of People: ");
+						People = sc.nextInt();
 						insertData(conn, title, author, publisher);
 						break;
 						
