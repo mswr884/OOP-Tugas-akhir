@@ -78,7 +78,7 @@ public class Main {
 					default:
 						break;
 				}
-				if(choice == 3) {
+				if(choice == 5) {
 					break;
 				}
 			}
