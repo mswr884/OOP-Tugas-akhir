@@ -18,7 +18,7 @@ public class Main {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			//create connection
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/booksmanagement","root","");	
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restomanagement","root","");	
 			if(conn != null) {
 				System.out.println("connection established");
 				return conn;
