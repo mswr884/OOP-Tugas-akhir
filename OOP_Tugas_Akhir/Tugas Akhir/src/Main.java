@@ -7,7 +7,9 @@ public class Main {
 		System.out.println("Restaurant reservation");
 		System.out.println("1. Show menu");
 		System.out.println("2. Make reservation");
-		System.out.println("3. Exit");
+		System.out.println("3. Update");
+		System.out.println("4. Delete");
+		System.out.println("5. Exit");
 		System.out.println("Input your choice");
 		Integer choice = sc.nextInt();
 		sc.nextLine();
@@ -17,7 +19,6 @@ public class Main {
 	public static Connection init() {
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			//create connection
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/restomanagement","root","");	
 			if(conn != null) {
 				System.out.println("connection established");
@@ -35,10 +36,8 @@ public class Main {
 		Connection conn;
 		try {
 			conn = init();
-//			//execute query
-//			//select
+			String ReservationId;
 			Integer choice = 0;
-			//scanner input
 			Scanner sc = new Scanner(System.in);
 			while(choice != 3) {
 				choice = menu(sc);
@@ -63,6 +62,18 @@ public class Main {
 						People = sc.nextInt();
 						insertData(Reservation, Name, Desks, Type, People);
 						break;
+
+					case 3: 
+						String Status;
+						System.out.println("Input Reservation ID: ");
+						ReservationId = sc.nextLine();
+						updateData(Reservation, ReservationId, Status);
+						break;
+
+					case 4: 
+						System.out.println("Input Reservation ID: ");
+						ReservationId = sc.nextLine();
+						deleteData(Reservation, ReservationId);
 						
 					default:
 						break;
@@ -72,15 +83,8 @@ public class Main {
 				}
 			}
 			
-//			//insert
-//			insertData(conn,"cerpen","malik","Gunung Agung");
-//			//update data
-//			updateData(conn,"lari sore","mamak",3);
-//			viewData(conn,"select * from books");
-//			deleteData(conn,5);
-//			viewData(conn,"select * from books");
 			
-			conn.close();
+			Reservation.close();
 			
 		}catch(Exception e) {
 			
@@ -99,7 +103,7 @@ public class Main {
 		}
 	}
 	
-	public static void insertData(Connection Reserve, String Name, String Desks, String Type, String People) {
+	public static void insertData(Connection Reservation, String Name, String Desks, String Type, String People) {
 		try {
 			PreparedStatement pst = conn.prepareStatement("insert into restomanagement (Name, Desks, Type, People) values (?,?,?,?)");
 			pst.setString(1, Name);
@@ -117,12 +121,11 @@ public class Main {
 		}
 	}
 	
-	public static void updateData(Connection conn, String title, String author, int id) {
+	public static void updateData(Connection Reservation, String ReservationId, String Status) {
 		try {
-			PreparedStatement pst = conn.prepareStatement("update books set title = ? ,author = ? where id = ? ");
-			pst.setString(1, title);
-			pst.setString(2, author);
-			pst.setInt(3, id);
+			PreparedStatement pst = conn.prepareStatement("update restomanagement set Status = ? where ReservationId = ? ");
+			pst.setString(1, Status);
+			pst.setString(2, ReservationId);
 			int check = pst.executeUpdate();
 			if(check != 0) {
 				System.out.println("Succesfully update data");
@@ -134,10 +137,10 @@ public class Main {
 		}
 	}
 	
-	public static void deleteData(Connection conn, int id) {
+	public static void deleteData(Connection Reservation, String ReservationId) {
 		try {
-			PreparedStatement pst = conn.prepareStatement("delete from books where id = ?");
-			pst.setInt(1, id);
+			PreparedStatement pst = conn.prepareStatement("delete from restomanagement where ReservationId = ?");
+			pst.setInt(1, ReservationId);
 			int check = pst.executeUpdate();
 			if(check != 0) {
 				System.out.println("Success delete data");
