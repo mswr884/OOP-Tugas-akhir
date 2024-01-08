@@ -45,7 +45,7 @@ public class Main {
 				switch (choice) {
 					case 1:
 						System.out.println("Menus: ");
-						viewData(conn,"select * from Menu");
+						viewData(Menu,"select * from Menu");
 						break;
 						
 					case 2:
@@ -61,7 +61,7 @@ public class Main {
 						Type = sc.nextLine();
 						System.out.println("Input Total Number of People: ");
 						People = sc.nextInt();
-						insertData(conn, title, author, publisher);
+						insertData(Reservation, Name, Desks, Type, People);
 						break;
 						
 					default:
@@ -87,24 +87,25 @@ public class Main {
 		}
 	}
 	
-	public static void viewData(Connection conn, String query) {
+	public static void viewData(Connection Menu, String query) {
 		try {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
 			while(rs.next()) {
-				System.out.println("title: "+rs.getString("title")+" , author: "+rs.getString("author")+ " , publisher: "+rs.getString("publisher"));
+				System.out.println("Menu ID: "+rs.getString("MenuId")+" , Name: "+rs.getString("MenuName")+ " , Narration: "+rs.getString("Narration"));
 			}
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
-	public static void insertData(Connection conn, String title, String author, String publisher) {
+	public static void insertData(Connection Reserve, String Name, String Desks, String Type, String People) {
 		try {
-			PreparedStatement pst = conn.prepareStatement("insert into books (title, author, publisher) values (?,?,?)");
-			pst.setString(1, title);
-			pst.setString(2, author);
-			pst.setString(3, publisher);
+			PreparedStatement pst = conn.prepareStatement("insert into restomanagement (Name, Desks, Type, People) values (?,?,?,?)");
+			pst.setString(1, Name);
+			pst.setString(2, Desks);
+			pst.setString(3, Type);
+			pst.setString(4, People);
 			int check = pst.executeUpdate();
 			if(check != 0) {
 				System.out.println("Success insert data");
